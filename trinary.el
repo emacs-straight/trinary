@@ -4,7 +4,7 @@
 
 ;; Author: Matúš Goljer <matus.goljer@gmail.com>
 ;; Maintainer: Matúš Goljer <matus.goljer@gmail.com>
-;; Version: 1.0.0
+;; Version: 1.2.1
 ;; Created: 25th August 2018
 ;; Package-requires: ((emacs "24"))
 ;; Keywords: languages
@@ -40,7 +40,7 @@
                (:constructor trinary-true (&aux (value trinary--true)))
                (:constructor trinary-maybe (&aux (value trinary--maybe)))
                (:constructor trinary-false (&aux (value trinary--false))))
-  value)
+  (value nil :type integer :read-only t))
 
 (defun trinary--int-to-value (x)
   "Convert X to `trinary' value."
@@ -69,6 +69,10 @@
 (defun trinary-necessary-p (value)
   "Return non-nil if it is necessary that VALUE is true₂."
   (trinary-true-p value))
+
+(defun trinary-from-bool (value)
+  "Convert boolean value to trinary value."
+  (if value (trinary-true) (trinary-false)))
 
 (defun trinary-not (a)
   "Negate the VALUE.
